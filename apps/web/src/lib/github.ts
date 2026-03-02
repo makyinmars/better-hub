@@ -5831,10 +5831,10 @@ export async function getOrgMembers(org: string, perPage = 100) {
  * GitHub stats endpoints return 202 while computing data in the background.
  * Retry with exponential backoff until we get a 200 with actual data.
  */
-async function retryStatsRequest<T>(
-	request: () => Promise<{ status: number; data: T }>,
+async function retryStatsRequest<T extends { status: number; data: unknown }>(
+	request: () => Promise<T>,
 	maxRetries = 4,
-): Promise<{ status: number; data: T }> {
+): Promise<T> {
 	let response = await request();
 	let attempt = 0;
 	while (response.status === 202 && attempt < maxRetries) {

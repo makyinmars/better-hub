@@ -326,7 +326,7 @@ export default async function PRDetailPage({
 	}
 
 	for (const c of commits) {
-		const commitUser = c.author || c.committer;
+		const commitUser = c.author;
 		const entry: CommitEntry = {
 			type: "commit",
 			id: c.sha,
